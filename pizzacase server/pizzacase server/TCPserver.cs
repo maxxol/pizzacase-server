@@ -36,6 +36,12 @@ namespace pizzacase_server
                 if (read == 0) return;
 
                 int messageLength = BitConverter.ToInt32(lengthBuf, 0);
+                if (messageLength <= 0 || messageLength > 10000) //input validation
+                {
+                    Console.WriteLine("byte length out of acceptable range");
+                    client.Close();
+                return;
+                }
 
                 // Read messageLength bytes
                 byte[] payload = new byte[messageLength];
